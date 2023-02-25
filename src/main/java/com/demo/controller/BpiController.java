@@ -13,17 +13,14 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("bpi")
-public class TestController {
+public class BpiController {
 
     private final RestService restService;
 
-    private final CurrencyNameRepository currencyNameRepository;
-
     private final CurrencyRepository currencyRepository;
 
-    public TestController(RestService restService, CurrencyNameRepository currencyNameRepository, CurrencyRepository currencyRepository) {
+    public BpiController(RestService restService, CurrencyNameRepository currencyNameRepository, CurrencyRepository currencyRepository) {
         this.restService = restService;
-        this.currencyNameRepository = currencyNameRepository;
         this.currencyRepository = currencyRepository;
     }
 
@@ -33,8 +30,10 @@ public class TestController {
     }
 
     @GetMapping("api")
-    public ResponseEntity callApi() throws IOException {
-        return ResponseEntity.ok(restService.callApi("https://api.coindesk.com/v1/bpi/currentprice.json"));
+    public ResponseEntity callApi(String s) throws IOException {
+        return ResponseEntity.ok(
+                restService.callApi("https://api.coindesk.com/v1/bpi/currentprice.json")
+        );
     }
 
     @GetMapping
@@ -53,6 +52,13 @@ public class TestController {
     @PutMapping
     public ResponseEntity<Currency> updateCurrency(@RequestBody Currency currency) {
         return ResponseEntity.ok(currencyRepository.save(currency));
+    }
+
+    @PostMapping("api")
+    public ResponseEntity updateBpiData() {
+        return ResponseEntity.ok(
+                restService.updateBpiData("https://api.coindesk.com/v1/bpi/currentprice.json")
+        );
     }
 
     @DeleteMapping

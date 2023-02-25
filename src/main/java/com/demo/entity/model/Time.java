@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 public class Time {
 
-    private Instant updated;
-    private Instant updatedISO;
-    private Instant updateduk;
+    private String updated;
+    private String updatedISO;
+    private String updateduk;
 }
